@@ -11,12 +11,12 @@ class TitleBar {
       children: [
         Expanded(
           child: Container(
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [Colors.transparent, Colors.transparent],
-                  stops: [0.0, 1.0]),
+                  colors: [Color.foregroundColor, Color.foregroundColor],
+                  stops: const [0.0, 1.0]),
             ),
             child: Column(children: [
               WindowTitleBarBox(
@@ -50,10 +50,10 @@ class WindowButtons extends StatefulWidget {
   const WindowButtons({Key? key}) : super(key: key);
 
   @override
-  _WindowButtonsState createState() => _WindowButtonsState();
+  WindowButtonsState createState() => WindowButtonsState();
 }
 
-class _WindowButtonsState extends State<WindowButtons> {
+class WindowButtonsState extends State<WindowButtons> {
   void maximizeOrRestore() {
     setState(() {
       appWindow.maximizeOrRestore();

@@ -8,7 +8,6 @@ import 'package:cook_book/components/MobileIngredientCard.dart';
 import 'package:flutter/material.dart';
 import '../Theme/Colors.dart';
 import '../Utils/ApiCall.dart';
-import '../components/AppBar.dart';
 import '../components/ComponentCard.dart';
 import '../components/IngredientsCard.dart';
 
@@ -20,26 +19,26 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var AllCategories;
-  var AllAreas;
-  var AllIngredients;
-  var ARandomRecipe;
+  dynamic allCategories;
+  dynamic allAreas;
+  dynamic allIngredients;
+  dynamic aRandomRecipe;
   @override
   void initState() {
     super.initState();
 
-    getListOfAllCategories();
-    getListOfAllAreas();
-    getListOfAllIngredients();
-    getARandomRecipe();
+    getListOfallCategories();
+    getListOfallAreas();
+    getListOfallIngredients();
+    getaRandomRecipe();
   }
 
-  getListOfAllCategories() async {
+  getListOfallCategories() async {
     try {
       var dat = await FetchApi().fetchListOfAllCategory();
       if (dat != null) {
         setState(() {
-          AllCategories = dat["meals"];
+          allCategories = dat["meals"];
         });
         print(dat["meals"].length);
       }
@@ -48,12 +47,12 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  getListOfAllAreas() async {
+  getListOfallAreas() async {
     try {
       var dat = await FetchApi().fetchListOfAllAreas();
       if (dat != null) {
         setState(() {
-          AllAreas = dat["meals"];
+          allAreas = dat["meals"];
         });
       }
     } catch (e) {
@@ -61,12 +60,12 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  getListOfAllIngredients() async {
+  getListOfallIngredients() async {
     try {
       var dat = await FetchApi().fetchListOfAllIngredients();
       if (dat != null) {
         setState(() {
-          AllIngredients = dat["meals"];
+          allIngredients = dat["meals"];
         });
       }
     } catch (e) {
@@ -74,12 +73,12 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  getARandomRecipe() async {
+  getaRandomRecipe() async {
     try {
       var dat = await FetchApi().fetchARandomRecipe();
       if (dat != null) {
         setState(() {
-          ARandomRecipe = dat["meals"];
+          aRandomRecipe = dat["meals"];
         });
       }
     } catch (e) {
@@ -91,19 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.backgroundColor,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Platform.isAndroid || Platform.isIOS
-              ? Padding(
-                  padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).viewPadding.top))
-              : TitleBar().mainAppBar(),
-          Expanded(
-            child: ListView(shrinkWrap: true, children: [mobileView()]),
-          ),
-        ],
-      ),
+      body: ListView(shrinkWrap: true, children: [mobileView()]),
     );
   }
 
@@ -125,11 +112,11 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          //
-          // ──────────────────────────────────────────────────────── I ──────────
-          //   :::::: P A R T   O N E : :  :   :    :     :        :          :
-          // ──────────────────────────────────────────────────────────────────
-          //
+//
+// ──────────────────────────────────────────────────────── I ──────────
+//   :::::: P A R T   O N E : :  :   :    :     :        :          :
+// ──────────────────────────────────────────────────────────────────
+//
 
           Padding(
             padding: EdgeInsets.only(bottom: Spacing.md),
@@ -139,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontFamily: 'QuickSand',
                     color: Color.textColor)),
           ),
-          AllCategories == null
+          allCategories == null
               ? Center(
                   child: Image.asset("assets/gifs/loader.gif"),
                 )
@@ -155,23 +142,27 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: ListView.builder(
                       physics: const BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
-                      itemCount: AllCategories.length,
+                      itemCount: allCategories.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return AllCategories[index]["strCategory"] == "Pork" ? const Center(child: Text(" "),) : ComponentCard(
-                            text: AllCategories[index]["strCategory"],
-                            func: () {
-                              print('$index');
-                            });
+                        return allCategories[index]["strCategory"] == "Pork"
+                            ? const Center(
+                                child: Text(" "),
+                              )
+                            : ComponentCard(
+                                text: allCategories[index]["strCategory"],
+                                func: () {
+                                  print('$index');
+                                });
                       },
                     ),
                   ),
                 ),
 
-          //
-          // ──────────────────────────────────────────────────────── II ──────────
-          //   :::::: P A R T   T W O : :  :   :    :     :        :          :
-          // ──────────────────────────────────────────────────────────────────
-          //
+//
+// ──────────────────────────────────────────────────────── II ──────────
+//   :::::: P A R T   T W O : :  :   :    :     :        :          :
+// ──────────────────────────────────────────────────────────────────
+//
 
           Padding(
             padding: EdgeInsets.symmetric(vertical: Spacing.md),
@@ -181,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontFamily: 'QuickSand',
                     color: Color.textColor)),
           ),
-          AllAreas == null
+          allAreas == null
               ? Center(
                   child: Image.asset("assets/gifs/loader.gif"),
                 )
@@ -197,23 +188,27 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: ListView.builder(
                       physics: const BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
-                      itemCount: AllAreas.length,
+                      itemCount: allAreas.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return AllAreas[index]["strArea"] == "Unknown" ? const Center(child: Text(" "),) : ComponentCard(
-                            text: AllAreas[index]["strArea"],
-                            func: () {
-                              print('$index');
-                            });
+                        return allAreas[index]["strArea"] == "Unknown"
+                            ? const Center(
+                                child: Text(" "),
+                              )
+                            : ComponentCard(
+                                text: allAreas[index]["strArea"],
+                                func: () {
+                                  print('$index');
+                                });
                       },
                     ),
                   ),
                 ),
 
-          //
-          // ──────────────────────────────────────────────────────────── III ──────────
-          //   :::::: P A R T   T H R E E : :  :   :    :     :        :          :
-          // ──────────────────────────────────────────────────────────────────────
-          //
+//
+// ──────────────────────────────────────────────────────────── III ──────────
+//   :::::: P A R T   T H R E E : :  :   :    :     :        :          :
+// ──────────────────────────────────────────────────────────────────────
+//
 
           Padding(
             padding: EdgeInsets.symmetric(vertical: Spacing.md),
@@ -223,7 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontFamily: 'QuickSand',
                     color: Color.textColor)),
           ),
-          AllIngredients == null
+          allIngredients == null
               ? Center(
                   child: Image.asset("assets/gifs/loader.gif"),
                 )
@@ -239,14 +234,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: ListView.builder(
                       physics: const BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
-                      itemCount: AllIngredients.length,
+                      itemCount: allIngredients.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return AllIngredients[index]["strIngredient"] == "Pork" ? const Center(child: Text(" "),) : IngredientsCard(
-                            headingText: AllIngredients[index]["strIngredient"],
-                            text: AllIngredients[index]["strDescription"],
-                            func: () {
-                              print('$index');
-                            });
+                        return allIngredients[index]["strIngredient"] == "Pork"
+                            ? const Center(
+                                child: Text(" "),
+                              )
+                            : IngredientsCard(
+                                headingText: allIngredients[index]
+                                    ["strIngredient"],
+                                text: allIngredients[index]["strDescription"],
+                                func: () {
+                                  print('$index');
+                                });
                       },
                     ),
                   ),
@@ -271,39 +271,39 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Color.textColor)),
           ),
           Platform.isAndroid || Platform.isIOS
-              ? ARandomRecipe == null
+              ? aRandomRecipe == null
                   ? Center(
                       child: Image.asset("assets/gifs/loader.gif"),
                     )
                   : Padding(
-                    padding: const EdgeInsets.only(right:15.0 , bottom: 15.0),
-                    child: MobileCard(
+                      padding: const EdgeInsets.only(right: 15.0, bottom: 15.0),
+                      child: MobileCard(
                         data: Column(
                           children: [
-                            Text(ARandomRecipe[0]["strMeal"],
+                            Text(aRandomRecipe[0]["strMeal"],
                                 style: TextStyle(
                                     fontSize: Sizes.lg,
                                     fontFamily: 'QuickSand',
                                     color: Color.headingColor)),
                           ],
                         ),
-                        fun: MobileRandomRecipe,
+                        fun: mobileRandomRecipe,
                         img: ClipRRect(
                             borderRadius: BorderRadius.circular(14.0),
                             child: FadeInImage.assetNetwork(
-                              image: ARandomRecipe[0]["strMealThumb"],
+                              image: aRandomRecipe[0]["strMealThumb"],
                               placeholder: 'assets/gifs/loader.gif',
                             )),
                       ),
-                  )
+                    )
 
-              //
-              // ──────────────────────────────────────────────────────────────────── V ──────────
-              //   :::::: D E S K T O P   W I D G E T : :  :   :    :     :        :          :
-              // ──────────────────────────────────────────────────────────────────────────────
-              //
+//
+// ──────────────────────────────────────────────────────────────────── V ──────────
+//   :::::: D E S K T O P   W I D G E T : :  :   :    :     :        :          :
+// ──────────────────────────────────────────────────────────────────────────────
+//
 
-              : ARandomRecipe == null
+              : aRandomRecipe == null
                   ? Center(
                       child: Image.asset("assets/gifs/loader.gif"),
                     )
@@ -313,50 +313,46 @@ class _HomeScreenState extends State<HomeScreen> {
                             PointerDeviceKind.touch,
                             PointerDeviceKind.mouse
                           }),
-                      child: 
-                         SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          height: 550,
-                          child: MainCard(
-                            img: ClipRRect(
-                                borderRadius: BorderRadius.circular(14.0),
-                                child: FadeInImage.assetNetwork(
-                                  image: ARandomRecipe[0]["strMealThumb"],
-                                  placeholder: 'assets/gifs/loader.gif',
-                                )),
-                            data: Column(children: [
-                              Text(ARandomRecipe[0]["strMeal"],
-                                  style: TextStyle(
-                                      fontSize: Sizes.lg,
-                                      fontFamily: 'QuickSand',
-                                      color: Color.headingColor)),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 15.0),
-                                child: SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.7,
-                                  child: Flexible(
-                                    child: Text(
-                                        ARandomRecipe[0]["strInstructions"],
-                                        overflow: TextOverflow.visible,
-                                        style: TextStyle(
-                                            fontSize: Sizes.sm,
-                                            fontFamily: 'QuickSand',
-                                            color: Color.simpleColor)),
-                                  ),
-                                ),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        height: 550,
+                        child: MainCard(
+                          img: ClipRRect(
+                              borderRadius: BorderRadius.circular(14.0),
+                              child: FadeInImage.assetNetwork(
+                                image: aRandomRecipe[0]["strMealThumb"],
+                                placeholder: 'assets/gifs/loader.gif',
+                              )),
+                          data: Column(children: [
+                            Text(aRandomRecipe[0]["strMeal"],
+                                style: TextStyle(
+                                    fontSize: Sizes.lg,
+                                    fontFamily: 'QuickSand',
+                                    color: Color.headingColor)),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 15.0, right: 15.0),
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.6,
+                                child: Text(aRandomRecipe[0]["strInstructions"],
+                                    maxLines: 25,
+                                    overflow: TextOverflow.fade,
+                                    style: TextStyle(
+                                        fontSize: Sizes.sm,
+                                        fontFamily: 'QuickSand',
+                                        color: Color.simpleColor)),
                               ),
-                            ]),
-                          ),
+                            ),
+                          ]),
                         ),
                       ),
-                    
+                    ),
         ],
       ),
     );
   }
 }
 
-MobileRandomRecipe() {
+mobileRandomRecipe() {
   print("Mobile");
 }

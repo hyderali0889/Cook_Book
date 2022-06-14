@@ -15,7 +15,7 @@ class MainCard extends StatelessWidget {
     return Padding(
       padding:  EdgeInsets.symmetric(vertical:Spacing.md),
       child: Container(
-        width: MediaQuery.of(context).size.width,
+        width: MediaQuery.of(context).size.width * 0.8,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(14.0) , color: Color.iconColor),
         child: Row( 
           

@@ -41,6 +41,7 @@ dependencies:
   hovering: ^1.0.4
   advance_notification: ^1.0.6
   http: ^0.13.4
+  dot_navigation_bar: ^1.0.1+4
 
 dev_dependencies:
   flutter_test:

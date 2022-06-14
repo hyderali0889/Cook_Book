@@ -2,7 +2,6 @@
 
 import 'dart:io';
 import 'package:advance_notification/advance_notification.dart';
-import 'package:cook_book/Screens/HomeSceen.dart';
 import 'package:cook_book/Screens/NoConnection.dart';
 import 'package:cook_book/Theme/Sizes.dart';
 import 'package:cook_book/Utils/GradientText.dart';
@@ -10,6 +9,8 @@ import 'package:flutter/material.dart';
 import '../Theme/Colors.dart';
 import '../components/AppBar.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+
+import '../components/Navigation.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -33,12 +34,12 @@ class _SplashScreenState extends State<SplashScreen> {
       result = await _connectivity.checkConnectivity();
       if (result == ConnectivityResult.mobile ||
           result == ConnectivityResult.wifi ||
-          result == ConnectivityResult.ethernet) {
+          result == ConnectivityResult.ethernet ) {
         Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: ((context) => const HomeScreen())));
+            MaterialPageRoute(builder: ((context) => const Navigation())));
       } else {
         Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: ((context) => const NotConnected())));
+            MaterialPageRoute(builder: ((context) => const Navigation())));
       }
     } catch (e) {
       const AdvanceSnackBar(
