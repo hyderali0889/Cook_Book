@@ -17,7 +17,6 @@ class Navigation extends StatefulWidget {
   State<Navigation> createState() => _NavigationState();
 }
 
-
 class _NavigationState extends State<Navigation> {
   int nav = 0;
   bool btn1 = false;
@@ -30,7 +29,12 @@ class _NavigationState extends State<Navigation> {
       _selectedTab = i;
     });
   }
-  List<Widget> linda = [const HomeScreen(), const SearchScreen(), const AboutScreen()];
+
+  List<Widget> linda = [
+    const HomeScreen(),
+    const SearchScreen(),
+    const AboutScreen()
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -179,41 +183,38 @@ class _NavigationState extends State<Navigation> {
                               ]),
                             ),
                           )),
-                       Expanded(child: linda[nav]),
+                      Expanded(child: linda[nav]),
                     ],
                   )),
                 ],
               ),
             ),
-            bottomNavigationBar: DotNavigationBar(
-              borderRadius: 12.0,
-              backgroundColor: Color.foregroundColor,
+      bottomNavigationBar: DotNavigationBar(
+        borderRadius: 12.0,
+        backgroundColor: Color.foregroundColor,
+        currentIndex: _selectedTab,
+        onTap: _handleIndexChanged,
+        paddingR: const EdgeInsets.all(0.0),
+        items: [
+          /// Home
+          DotNavigationBarItem(
+            icon: const Icon(Icons.home),
+            selectedColor: Color.headingColor,
+          ),
 
-          currentIndex: _selectedTab,
-          onTap: _handleIndexChanged,
- paddingR: const EdgeInsets.all(0.0),
-          items: [
-            /// Home
-            DotNavigationBarItem(
-              icon: Icon(Icons.home),
-              selectedColor: Color.headingColor,
-            ),
+          /// Search
+          DotNavigationBarItem(
+            icon: const Icon(Icons.search),
+            selectedColor: Color.headingColor,
+          ),
 
-
-            /// Search
-            DotNavigationBarItem(
-              icon: Icon(Icons.search),
-              selectedColor: Color.headingColor,
-            ),
-
-            /// Profile
-            DotNavigationBarItem(
-              icon: Icon(Icons.person),
-              selectedColor: Color.headingColor,
-            ),
-
-          ],
-        ),
+          /// Profile
+          DotNavigationBarItem(
+            icon: const Icon(Icons.person),
+            selectedColor: Color.headingColor,
+          ),
+        ],
+      ),
     );
   }
 }
