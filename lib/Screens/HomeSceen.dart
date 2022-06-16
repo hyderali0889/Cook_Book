@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, avoid_print
 import 'dart:io';
 import 'dart:ui';
 import 'package:cook_book/Theme/Sizes.dart';
@@ -323,33 +323,107 @@ class _HomeScreenState extends State<HomeScreen> {
                                 image: aRandomRecipe[0]["strMealThumb"],
                                 placeholder: 'assets/gifs/loader.gif',
                               )),
-                          data: Column(children: [
-                            Text(aRandomRecipe[0]["strMeal"],
-                                style: TextStyle(
-                                    fontSize: Sizes.lg,
-                                    fontFamily: 'QuickSand',
-                                    color: Color.headingColor)),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 15.0, right: 15.0),
-                              child: SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.6,
-                                child: Text(aRandomRecipe[0]["strInstructions"],
-                                    maxLines: 25,
-                                    overflow: TextOverflow.fade,
-                                    style: TextStyle(
-                                        fontSize: Sizes.sm,
-                                        fontFamily: 'QuickSand',
-                                        color: Color.simpleColor)),
-                              ),
-                            ),
-                          ]),
+                          data: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.6,
+                                  child: Center(
+                                    child: Text(aRandomRecipe[0]["strMeal"],
+                                        style: TextStyle(
+                                            fontSize: Sizes.lg,
+                                            fontFamily: 'QuickSand',
+                                            color: Color.headingColor)),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 15.0, right: 15.0),
+                                  child: Text("Ingridients Required",
+                                      style: TextStyle(
+                                          fontSize: Sizes.lg,
+                                          fontFamily: 'QuickSand',
+                                          color: Color.headingColor)),
+                                ),
+                                Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 15.0, right: 15.0),
+                                    child: SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.6,
+                                      height: 40,
+                                      child: Expanded(
+                                        child: ListView(
+                                          scrollDirection: Axis.horizontal,
+                                          children: List.generate(21, (index) {
+                                            if (index == 0 ||
+                                                aRandomRecipe[0][
+                                                        "strIngredient$index"] ==
+                                                    "" ||
+                                                aRandomRecipe[0][
+                                                        "strIngredient$index"] ==
+                                                    null) {
+                                              return const Text("");
+                                            } else {
+                                              return Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 8.0),
+                                                child: Text(
+                                                  aRandomRecipe[0]
+                                                      ["strIngredient$index"],
+                                                  style: TextStyle(
+                                                      fontSize: Sizes.lg,
+                                                      fontFamily: 'QuickSand',
+                                                      color: Color.textColor),
+                                                ),
+                                              );
+                                            }
+                                          }),
+                                        ),
+                                      ),
+                                    )),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 15.0, right: 15.0),
+                                  child: Text("Instructions for Cooking",
+                                      style: TextStyle(
+                                          fontSize: Sizes.lg,
+                                          fontFamily: 'QuickSand',
+                                          color: Color.headingColor)),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 15.0, right: 15.0),
+                                  child: SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.6,
+                                      child: Expanded(
+                                        child: SingleChildScrollView(
+                                          child: Text(
+                                              aRandomRecipe[0]
+                                                  ["strInstructions"],
+                                              style: TextStyle(
+                                                  fontSize: Sizes.sm,
+                                                  fontFamily: 'QuickSand',
+                                                  color: Color.simpleColor)),
+                                        ),
+                                      )),
+                                ),
+                              ]),
                         ),
                       ),
                     ),
         ],
       ),
     );
+  }
+
+  randomRecipeIngredients() {
+    for (int i = 1; i < 20; i++) {
+      return Text("$i");
+    }
   }
 }
 

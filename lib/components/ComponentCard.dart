@@ -1,5 +1,4 @@
-// ignore_for_file: file_names
-import 'dart:io';
+// ignore_for_file: file_names, avoid_print
 
 import 'package:cook_book/Theme/Spacing.dart';
 import 'package:flutter/material.dart';

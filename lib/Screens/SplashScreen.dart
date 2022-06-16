@@ -2,7 +2,6 @@
 
 import 'dart:io';
 import 'package:advance_notification/advance_notification.dart';
-import 'package:cook_book/Screens/NoConnection.dart';
 import 'package:cook_book/Theme/Sizes.dart';
 import 'package:cook_book/Utils/GradientText.dart';
 import 'package:flutter/material.dart';

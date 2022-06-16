@@ -39,17 +39,42 @@ class _NavigationState extends State<Navigation> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      body: Platform.isAndroid || Platform.isIOS
+      body:
+      //
+      // ──────────────────────────────────────────────────────────────────── I ──────────
+      //   :::::: A N D R O I D   W I D G E T : :  :   :    :     :        :          :
+      // ──────────────────────────────────────────────────────────────────────────────
+      //
+
+
+
+      Platform.isAndroid || Platform.isIOS
           ? SizedBox(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               child: Expanded(child: linda[_selectedTab]))
+
+
+              //
+              // ──────────────────────────────────────────────────────────────────── I ──────────
+              //   :::::: D E S K T O P   W I D G E T : :  :   :    :     :        :          :
+              // ──────────────────────────────────────────────────────────────────────────────
+              //
+
+
           : SizedBox(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               child: Column(
                 children: [
                   TitleBar().mainAppBar(),
+                  //
+                  // ──────────────────────────────────────────────────────────────────────────── I ──────────
+                  //   :::::: D E S K T O P   N A V I G A T I O N : :  :   :    :     :        :          :
+                  // ──────────────────────────────────────────────────────────────────────────────────────
+                  //
+
+
                   Expanded(
                       child: Row(
                     children: [
@@ -61,6 +86,8 @@ class _NavigationState extends State<Navigation> {
                             child: Padding(
                               padding: const EdgeInsets.only(top: 30.0),
                               child: Column(children: [
+
+
                                 //
                                 // ──────────────────────────────────────────────────────────────── I ──────────
                                 //   :::::: M A I N   B T N   O N E : :  :   :    :     :        :          :
@@ -183,13 +210,29 @@ class _NavigationState extends State<Navigation> {
                               ]),
                             ),
                           )),
+
+                         //
+                         // ──────────────────────────────────────────────────────────────────────────────── I ──────────
+                         //   :::::: D E S K T O P   M A I N   S C R E E N S : :  :   :    :     :        :          :
+                         // ──────────────────────────────────────────────────────────────────────────────────────────
+                         //
+
+
                       Expanded(child: linda[nav]),
                     ],
                   )),
                 ],
               ),
             ),
-      bottomNavigationBar: DotNavigationBar(
+
+            //
+            // ──────────────────────────────────────────────────────────────────────────── I ──────────
+            //   :::::: A N D R O I D   N A V I G A T I O N : :  :   :    :     :        :          :
+            // ──────────────────────────────────────────────────────────────────────────────────────
+            //
+
+
+      bottomNavigationBar: Platform.isAndroid || Platform.isIOS ?  DotNavigationBar(
         borderRadius: 12.0,
         backgroundColor: Color.foregroundColor,
         currentIndex: _selectedTab,
@@ -214,7 +257,7 @@ class _NavigationState extends State<Navigation> {
             selectedColor: Color.headingColor,
           ),
         ],
-      ),
+      ) : null,
     );
   }
 }
