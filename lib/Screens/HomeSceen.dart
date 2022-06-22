@@ -1,6 +1,7 @@
 // ignore_for_file: file_names, avoid_print
 import 'dart:io';
 import 'dart:ui';
+import 'package:cook_book/Screens/AllRecipes.dart';
 import 'package:cook_book/Theme/Sizes.dart';
 import 'package:cook_book/Theme/Spacing.dart';
 import 'package:cook_book/components/Card.dart';
@@ -107,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 "Welcome To Cookbook",
                 style: TextStyle(
                     fontSize: Sizes.mainHeadings,
-                    fontFamily: 'QuickSand',
+
                     color: Color.headingColor),
               ),
             ),
@@ -123,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Text("Explore All Categories",
                 style: TextStyle(
                     fontSize: Sizes.headings,
-                    fontFamily: 'QuickSand',
+
                     color: Color.textColor)),
           ),
           allCategories == null
@@ -151,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             : ComponentCard(
                                 text: allCategories[index]["strCategory"],
                                 func: () {
-                                  print('$index');
+                                 Navigator.push(context, MaterialPageRoute(builder: ((context) => AllRecipes(data: allCategories[index]["strCategory"] ))));
                                 });
                       },
                     ),
@@ -169,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Text("Explore All Areas",
                 style: TextStyle(
                     fontSize: Sizes.headings,
-                    fontFamily: 'QuickSand',
+
                     color: Color.textColor)),
           ),
           allAreas == null
@@ -215,7 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Text("Explore All Ingredients",
                 style: TextStyle(
                     fontSize: Sizes.headings,
-                    fontFamily: 'QuickSand',
+
                     color: Color.textColor)),
           ),
           allIngredients == null
@@ -267,7 +268,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Text("Our Recomendation for today",
                 style: TextStyle(
                     fontSize: Sizes.headings,
-                    fontFamily: 'QuickSand',
+
                     color: Color.textColor)),
           ),
           Platform.isAndroid || Platform.isIOS
@@ -283,7 +284,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Text(aRandomRecipe[0]["strMeal"],
                                 style: TextStyle(
                                     fontSize: Sizes.lg,
-                                    fontFamily: 'QuickSand',
+
                                     color: Color.headingColor)),
                           ],
                         ),
@@ -333,7 +334,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: Text(aRandomRecipe[0]["strMeal"],
                                         style: TextStyle(
                                             fontSize: Sizes.lg,
-                                            fontFamily: 'QuickSand',
+
                                             color: Color.headingColor)),
                                   ),
                                 ),
@@ -343,7 +344,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: Text("Ingridients Required",
                                       style: TextStyle(
                                           fontSize: Sizes.lg,
-                                          fontFamily: 'QuickSand',
+
                                           color: Color.headingColor)),
                                 ),
                                 Padding(
@@ -353,7 +354,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       width: MediaQuery.of(context).size.width *
                                           0.6,
                                       height: 40,
-                                      child: Expanded(
+
                                         child: ListView(
                                           scrollDirection: Axis.horizontal,
                                           children: List.generate(21, (index) {
@@ -375,14 +376,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       ["strIngredient$index"],
                                                   style: TextStyle(
                                                       fontSize: Sizes.lg,
-                                                      fontFamily: 'QuickSand',
+
                                                       color: Color.textColor),
                                                 ),
                                               );
                                             }
                                           }),
                                         ),
-                                      ),
+
                                     )),
                                 Padding(
                                   padding: const EdgeInsets.only(
@@ -390,7 +391,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: Text("Instructions for Cooking",
                                       style: TextStyle(
                                           fontSize: Sizes.lg,
-                                          fontFamily: 'QuickSand',
+
                                           color: Color.headingColor)),
                                 ),
                                 Padding(
@@ -399,17 +400,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: SizedBox(
                                       width: MediaQuery.of(context).size.width *
                                           0.6,
-                                      child: Expanded(
+                                          height: 250,
+
                                         child: SingleChildScrollView(
+                                          scrollDirection: Axis.vertical,
                                           child: Text(
                                               aRandomRecipe[0]
                                                   ["strInstructions"],
                                               style: TextStyle(
                                                   fontSize: Sizes.sm,
-                                                  fontFamily: 'QuickSand',
+
                                                   color: Color.simpleColor)),
                                         ),
-                                      )),
+                                      ),
                                 ),
                               ]),
                         ),

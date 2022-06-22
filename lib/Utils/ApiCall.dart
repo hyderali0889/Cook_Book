@@ -64,7 +64,7 @@ class FetchApi {
     var client = http.Client();
     try {
       var res = await client.get(Uri.parse(
-          "www.themealdb.com/api/json/v1/1/filter.php?i=$ingredient"));
+          "https://www.themealdb.com/api/json/v1/1/filter.php?i=$ingredient"));
       if (res.statusCode == 200) {
         // print(res.body);
         return json.decode(res.body);
@@ -92,7 +92,7 @@ class FetchApi {
     var client = http.Client();
     try {
       var res = await client
-          .get(Uri.parse("www.themealdb.com/api/json/v1/1/lookup.php?i=$id"));
+          .get(Uri.parse("https://www.themealdb.com/api/json/v1/1/lookup.php?i=$id"));
       if (res.statusCode == 200) {
         // print(res.body);
         return json.decode(res.body);
@@ -106,7 +106,7 @@ class FetchApi {
     var client = http.Client();
     try {
       var res = await client.get(
-          Uri.parse("www.themealdb.com/api/json/v1/1/search.php?f=$letter"));
+          Uri.parse("https://www.themealdb.com/api/json/v1/1/search.php?f=$letter"));
       if (res.statusCode == 200) {
         // print(res.body);
         return json.decode(res.body);
@@ -120,7 +120,7 @@ class FetchApi {
     var client = http.Client();
     try {
       var res = await client.get(
-          Uri.parse("www.themealdb.com/api/json/v1/1/search.php?s=$query"));
+          Uri.parse("https://www.themealdb.com/api/json/v1/1/search.php?s=$query"));
       if (res.statusCode == 200) {
         // print(res.body);
         return json.decode(res.body);
@@ -134,7 +134,7 @@ class FetchApi {
     var client = http.Client();
     try {
       var res = await client.get(
-          Uri.parse("www.themealdb.com/api/json/v1/1/filter.php?c=$category"));
+          Uri.parse("https://www.themealdb.com/api/json/v1/1/filter.php?c=$category"));
       if (res.statusCode == 200) {
         // print(res.body);
         return json.decode(res.body);

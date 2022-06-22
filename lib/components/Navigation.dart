@@ -52,7 +52,7 @@ class _NavigationState extends State<Navigation> {
           ? SizedBox(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-              child: Expanded(child: linda[_selectedTab]))
+              child:linda[_selectedTab])
 
 
               //

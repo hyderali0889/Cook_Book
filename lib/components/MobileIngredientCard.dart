@@ -40,7 +40,7 @@ class MobileCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(14.0),
                       color: Color.foregroundColor,
-                      
+
                     ),
                     child: Center(
                       child: Text("Get Details" ,  style: TextStyle(

@@ -28,7 +28,7 @@ class TitleBar {
                           child: Text(
                         'CookBook',
                         style: TextStyle(
-                            fontFamily: 'QuickSand',
+                             
                             fontSize: Sizes.xl,
                             color: Color.textColor.withGreen(150)),
                       )),

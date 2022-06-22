@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
       result = await _connectivity.checkConnectivity();
       if (result == ConnectivityResult.mobile ||
           result == ConnectivityResult.wifi ||
-          result == ConnectivityResult.ethernet ) {
+          result == ConnectivityResult.ethernet) {
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: ((context) => const Navigation())));
       } else {
@@ -69,7 +69,8 @@ class _SplashScreenState extends State<SplashScreen> {
                 child: GradientText(
               "CookBook",
               style: TextStyle(
-                  fontSize: Sizes.mainHeadings, fontFamily: 'QuickSand'),
+                fontSize: Sizes.mainHeadings,
+              ),
               gradient: LinearGradient(colors: [
                 Color.textColor,
                 Color.foregroundColor,

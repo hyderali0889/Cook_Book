@@ -26,13 +26,13 @@ class _ComponentCardState extends State<ComponentCard> {
             setState(() {
               hovering = true;
             });
-            print(hovering);
+         
           },
           onExit: (e) {
             setState(() {
               hovering = false;
             });
-            print(hovering);
+
           },
           child: InkWell(
             onTap: widget.func,
@@ -46,7 +46,7 @@ class _ComponentCardState extends State<ComponentCard> {
                   child: Text(widget.text,
                       style: TextStyle(
                           fontSize: Sizes.lg,
-                          fontFamily: 'QuickSand',
+
                           color: Color.textColor))),
             ),
           ),
