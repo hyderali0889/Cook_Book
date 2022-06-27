@@ -107,9 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Text(
                 "Welcome To Cookbook",
                 style: TextStyle(
-                    fontSize: Sizes.mainHeadings,
-
-                    color: Color.headingColor),
+                    fontSize: Sizes.mainHeadings, color: Color.headingColor),
               ),
             ),
           ),
@@ -123,9 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: EdgeInsets.only(bottom: Spacing.md),
             child: Text("Explore All Categories",
                 style: TextStyle(
-                    fontSize: Sizes.headings,
-
-                    color: Color.textColor)),
+                    fontSize: Sizes.headings, color: Color.textColor)),
           ),
           allCategories == null
               ? Center(
@@ -152,7 +148,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             : ComponentCard(
                                 text: allCategories[index]["strCategory"],
                                 func: () {
-                                 Navigator.push(context, MaterialPageRoute(builder: ((context) => AllRecipes(data: allCategories[index]["strCategory"] ))));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: ((context) => AllRecipes(
+                                                data: allCategories[index]
+                                                    ["strCategory"],
+                                                selectedCt: "Category",
+                                              ))));
                                 });
                       },
                     ),
@@ -169,9 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: EdgeInsets.symmetric(vertical: Spacing.md),
             child: Text("Explore All Areas",
                 style: TextStyle(
-                    fontSize: Sizes.headings,
-
-                    color: Color.textColor)),
+                    fontSize: Sizes.headings, color: Color.textColor)),
           ),
           allAreas == null
               ? Center(
@@ -198,7 +199,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             : ComponentCard(
                                 text: allAreas[index]["strArea"],
                                 func: () {
-                                  print('$index');
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: ((context) => AllRecipes(
+                                                data: allAreas[index]
+                                                    ["strArea"],
+                                                selectedCt: "Area",
+                                              ))));
                                 });
                       },
                     ),
@@ -215,9 +223,7 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: EdgeInsets.symmetric(vertical: Spacing.md),
             child: Text("Explore All Ingredients",
                 style: TextStyle(
-                    fontSize: Sizes.headings,
-
-                    color: Color.textColor)),
+                    fontSize: Sizes.headings, color: Color.textColor)),
           ),
           allIngredients == null
               ? Center(
@@ -246,7 +252,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ["strIngredient"],
                                 text: allIngredients[index]["strDescription"],
                                 func: () {
-                                  print('$index');
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: ((context) => AllRecipes(
+                                                data: allIngredients[index]
+                                                    ["strIngredient"],
+                                                selectedCt: "Ingredient",
+                                              ))));
                                 });
                       },
                     ),
@@ -266,10 +279,9 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: EdgeInsets.symmetric(vertical: Spacing.md),
             child: Text("Our Recomendation for today",
-                style: TextStyle(
-                    fontSize: Sizes.headings,
+                  style: TextStyle(
+                      fontSize: Sizes.headings, color: Color.textColor)),
 
-                    color: Color.textColor)),
           ),
           Platform.isAndroid || Platform.isIOS
               ? aRandomRecipe == null
@@ -284,7 +296,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             Text(aRandomRecipe[0]["strMeal"],
                                 style: TextStyle(
                                     fontSize: Sizes.lg,
-
                                     color: Color.headingColor)),
                           ],
                         ),
@@ -334,7 +345,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: Text(aRandomRecipe[0]["strMeal"],
                                         style: TextStyle(
                                             fontSize: Sizes.lg,
-
                                             color: Color.headingColor)),
                                   ),
                                 ),
@@ -344,7 +354,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: Text("Ingridients Required",
                                       style: TextStyle(
                                           fontSize: Sizes.lg,
-
                                           color: Color.headingColor)),
                                 ),
                                 Padding(
@@ -354,36 +363,33 @@ class _HomeScreenState extends State<HomeScreen> {
                                       width: MediaQuery.of(context).size.width *
                                           0.6,
                                       height: 40,
-
-                                        child: ListView(
-                                          scrollDirection: Axis.horizontal,
-                                          children: List.generate(21, (index) {
-                                            if (index == 0 ||
-                                                aRandomRecipe[0][
-                                                        "strIngredient$index"] ==
-                                                    "" ||
-                                                aRandomRecipe[0][
-                                                        "strIngredient$index"] ==
-                                                    null) {
-                                              return const Text("");
-                                            } else {
-                                              return Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 8.0),
-                                                child: Text(
-                                                  aRandomRecipe[0]
-                                                      ["strIngredient$index"],
-                                                  style: TextStyle(
-                                                      fontSize: Sizes.lg,
-
-                                                      color: Color.textColor),
-                                                ),
-                                              );
-                                            }
-                                          }),
-                                        ),
-
+                                      child: ListView(
+                                        scrollDirection: Axis.horizontal,
+                                        children: List.generate(21, (index) {
+                                          if (index == 0 ||
+                                              aRandomRecipe[0]
+                                                      ["strIngredient$index"] ==
+                                                  "" ||
+                                              aRandomRecipe[0]
+                                                      ["strIngredient$index"] ==
+                                                  null) {
+                                            return const Text("");
+                                          } else {
+                                            return Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 8.0),
+                                              child: Text(
+                                                aRandomRecipe[0]
+                                                    ["strIngredient$index"],
+                                                style: TextStyle(
+                                                    fontSize: Sizes.lg,
+                                                    color: Color.textColor),
+                                              ),
+                                            );
+                                          }
+                                        }),
+                                      ),
                                     )),
                                 Padding(
                                   padding: const EdgeInsets.only(
@@ -391,28 +397,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: Text("Instructions for Cooking",
                                       style: TextStyle(
                                           fontSize: Sizes.lg,
-
                                           color: Color.headingColor)),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       top: 15.0, right: 15.0),
                                   child: SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.6,
-                                          height: 250,
-
-                                        child: SingleChildScrollView(
-                                          scrollDirection: Axis.vertical,
-                                          child: Text(
-                                              aRandomRecipe[0]
-                                                  ["strInstructions"],
-                                              style: TextStyle(
-                                                  fontSize: Sizes.sm,
-
-                                                  color: Color.simpleColor)),
-                                        ),
-                                      ),
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.6,
+                                    height: 250,
+                                    child: SingleChildScrollView(
+                                      scrollDirection: Axis.vertical,
+                                      child: Text(
+                                          aRandomRecipe[0]["strInstructions"],
+                                          style: TextStyle(
+                                              fontSize: Sizes.sm,
+                                              color: Color.simpleColor)),
+                                    ),
+                                  ),
                                 ),
                               ]),
                         ),

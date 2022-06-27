@@ -23,7 +23,7 @@ class IngredientsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 0 , 15.0 , 15.0),
+      padding: const EdgeInsets.fromLTRB(0, 0, 15.0, 15.0),
       child: Container(
         width: 350,
         decoration: BoxDecoration(
@@ -37,20 +37,34 @@ class IngredientsCard extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 15.0),
-                child: Text(headingText,style: TextStyle(color: Color.headingColor, fontSize: Sizes.lg)),
+                child: Text(headingText,
+                    style: TextStyle(
+                        color: Color.headingColor, fontSize: Sizes.lg)),
               ),
-              Text(text, overflow: TextOverflow.fade , maxLines: 8 ,style: TextStyle(color: Color.simpleColor,fontFamily: "QuickSand", fontSize: Sizes.sm)),
+              SizedBox(
+                height: 120,
+                child: SingleChildScrollView(
+                    child: Text(text,
+                        style: TextStyle(
+                            color: Color.simpleColor,
+                            fontFamily: "QuickSand",
+                            fontSize: Sizes.sm))),
+              ),
               Expanded(
-                
                 child: Center(
                   child: HoverButton(
                     onpressed: func,
-                    color: Platform.isAndroid || Platform.isIOS ?Color.foregroundColor : Color.iconColor,
-                    hoverColor:Color.foregroundColor,
+                    color: Platform.isAndroid || Platform.isIOS
+                        ? Color.foregroundColor
+                        : Color.iconColor,
+                    hoverColor: Color.foregroundColor,
                     minWidth: Spacing.xl * 5,
                     height: Spacing.xl,
                     child: Text(" Get Details ",
-                        style: TextStyle(color: Color.textColor, fontFamily: "QuickSand", fontSize: Sizes.md)),
+                        style: TextStyle(
+                            color: Color.textColor,
+                            fontFamily: "QuickSand",
+                            fontSize: Sizes.md)),
                   ),
                 ),
               )
