@@ -1,6 +1,7 @@
 // ignore_for_file: file_names, avoid_print
 import 'dart:io';
 import 'dart:ui';
+import 'package:advance_notification/advance_notification.dart';
 import 'package:cook_book/Screens/AllRecipes.dart';
 import 'package:cook_book/Theme/Sizes.dart';
 import 'package:cook_book/Theme/Spacing.dart';
@@ -24,6 +25,10 @@ class _HomeScreenState extends State<HomeScreen> {
   dynamic allAreas;
   dynamic allIngredients;
   dynamic aRandomRecipe;
+  bool isError1 = false;
+  bool isError2 = false;
+  bool isError3 = false;
+  bool isError4 = false;
   @override
   void initState() {
     super.initState();
@@ -36,54 +41,103 @@ class _HomeScreenState extends State<HomeScreen> {
 
   getListOfallCategories() async {
     try {
-      var dat = await FetchApi().fetchListOfAllCategory();
+      dynamic dat = await FetchApi().fetchListOfAllCategory();
+      Future.delayed(const Duration(seconds: 10), () {
+        if (dat == null) {
+          setState(() {
+            isError1 = true;
+          });
+        }
+      });
       if (dat != null) {
         setState(() {
           allCategories = dat["meals"];
         });
-        print(dat["meals"].length);
       }
     } catch (e) {
-      print(e);
+      const AdvanceSnackBar(
+              message: "Not Found", type: sType.ERROR, mode: Mode.MODERN)
+          .show(context);
+      setState(() {
+        isError1 = true;
+      });
     }
   }
 
   getListOfallAreas() async {
     try {
-      var dat = await FetchApi().fetchListOfAllAreas();
+      dynamic dat = await FetchApi().fetchListOfAllAreas();
+
+      Future.delayed(const Duration(seconds: 10), () {
+        if (dat == null) {
+          setState(() {
+            isError2 = true;
+          });
+        }
+      });
+
       if (dat != null) {
         setState(() {
           allAreas = dat["meals"];
         });
       }
     } catch (e) {
-      print(e);
+      const AdvanceSnackBar(
+              message: "Not Found", type: sType.ERROR, mode: Mode.MODERN)
+          .show(context);
+      setState(() {
+        isError2 = true;
+      });
     }
   }
 
   getListOfallIngredients() async {
     try {
-      var dat = await FetchApi().fetchListOfAllIngredients();
+      dynamic dat = await FetchApi().fetchListOfAllIngredients();
+      Future.delayed(const Duration(seconds: 10), () {
+        if (dat == null) {
+          setState(() {
+            isError3 = true;
+          });
+        }
+      });
       if (dat != null) {
         setState(() {
           allIngredients = dat["meals"];
         });
       }
     } catch (e) {
-      print(e);
+      const AdvanceSnackBar(
+              message: "Not Found", type: sType.ERROR, mode: Mode.MODERN)
+          .show(context);
+      setState(() {
+        isError3 = true;
+      });
     }
   }
 
   getaRandomRecipe() async {
     try {
-      var dat = await FetchApi().fetchARandomRecipe();
+      dynamic dat = await FetchApi().fetchARandomRecipe();
+      Future.delayed(const Duration(seconds: 10), () {
+        if (dat == null) {
+          setState(() {
+            isError4 = true;
+          });
+        }
+      });
       if (dat != null) {
         setState(() {
           aRandomRecipe = dat["meals"];
         });
       }
     } catch (e) {
-      print(e);
+      const AdvanceSnackBar(
+              message: "Not Found", type: sType.ERROR, mode: Mode.MODERN)
+          .show(context);
+      setState(() {
+        isError4 = true;
+      });
     }
   }
 
@@ -125,7 +179,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           allCategories == null
               ? Center(
-                  child: Image.asset("assets/gifs/loader.gif"),
+                  child: isError1
+                      ? Image.asset('assets/images/NotConnected.png')
+                      : Image.asset("assets/gifs/loader.gif"),
                 )
               : ScrollConfiguration(
                   behavior: ScrollConfiguration.of(context).copyWith(
@@ -176,7 +232,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           allAreas == null
               ? Center(
-                  child: Image.asset("assets/gifs/loader.gif"),
+                  child: isError2
+                      ? Image.asset('assets/images/NotConnected.png')
+                      : Image.asset("assets/gifs/loader.gif"),
                 )
               : ScrollConfiguration(
                   behavior: ScrollConfiguration.of(context).copyWith(
@@ -227,7 +285,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           allIngredients == null
               ? Center(
-                  child: Image.asset("assets/gifs/loader.gif"),
+                  child: isError3
+                      ? Image.asset('assets/images/NotConnected.png')
+                      : Image.asset("assets/gifs/loader.gif"),
                 )
               : ScrollConfiguration(
                   behavior: ScrollConfiguration.of(context).copyWith(
@@ -279,14 +339,15 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: EdgeInsets.symmetric(vertical: Spacing.md),
             child: Text("Our Recomendation for today",
-                  style: TextStyle(
-                      fontSize: Sizes.headings, color: Color.textColor)),
-
+                style: TextStyle(
+                    fontSize: Sizes.headings, color: Color.textColor)),
           ),
           Platform.isAndroid || Platform.isIOS
               ? aRandomRecipe == null
                   ? Center(
-                      child: Image.asset("assets/gifs/loader.gif"),
+                      child: isError4
+                          ? Image.asset('assets/images/NotConnected.png')
+                          : Image.asset("assets/gifs/loader.gif"),
                     )
                   : Padding(
                       padding: const EdgeInsets.only(right: 15.0, bottom: 15.0),
@@ -317,7 +378,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
               : aRandomRecipe == null
                   ? Center(
-                      child: Image.asset("assets/gifs/loader.gif"),
+                      child: isError4
+                          ? Image.asset('assets/images/NotConnected.png')
+                          : Image.asset("assets/gifs/loader.gif"),
                     )
                   : ScrollConfiguration(
                       behavior: ScrollConfiguration.of(context).copyWith(

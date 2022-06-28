@@ -1,6 +1,7 @@
 // ignore_for_file: file_names, avoid_print
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class FetchApi {
@@ -12,6 +13,8 @@ class FetchApi {
       if (res.statusCode == 200) {
         // print(res.body);
         return json.decode(res.body);
+      } else if (res.statusCode == 502) {
+        return const Text("Not Connected");
       }
     } catch (e) {
       print(e);
@@ -26,6 +29,8 @@ class FetchApi {
       if (res.statusCode == 200) {
         // print(res.body);
         return json.decode(res.body);
+      }else if (res.statusCode == 502) {
+        return const Text("Not Connected");
       }
     } catch (e) {
       print(e);
@@ -40,6 +45,8 @@ class FetchApi {
       if (res.statusCode == 200) {
         // print(res.body);
         return json.decode(res.body);
+      }else if (res.statusCode == 502) {
+        return const Text("Not Connected");
       }
     } catch (e) {
       print(e);
@@ -54,6 +61,8 @@ class FetchApi {
       if (res.statusCode == 200) {
         // print(res.body);
         return json.decode(res.body);
+      }else if (res.statusCode == 502) {
+        return const Text("Not Connected");
       }
     } catch (e) {
       print(e);
@@ -68,6 +77,8 @@ class FetchApi {
       if (res.statusCode == 200) {
         // print(res.body);
         return json.decode(res.body);
+      }else if (res.statusCode == 502) {
+        return const Text("Not Connected");
       }
     } catch (e) {
       print(e);
@@ -82,6 +93,8 @@ class FetchApi {
       if (res.statusCode == 200) {
         // print(res.body);
         return json.decode(res.body);
+      }else if (res.statusCode == 502) {
+        return const Text("Not Connected");
       }
     } catch (e) {
       print(e);
@@ -91,11 +104,13 @@ class FetchApi {
   fetchDataByid(id) async {
     var client = http.Client();
     try {
-      var res = await client
-          .get(Uri.parse("https://www.themealdb.com/api/json/v1/1/lookup.php?i=$id"));
+      var res = await client.get(Uri.parse(
+          "https://www.themealdb.com/api/json/v1/1/lookup.php?i=$id"));
       if (res.statusCode == 200) {
         // print(res.body);
         return json.decode(res.body);
+      }else if (res.statusCode == 502) {
+        return const Text("Not Connected");
       }
     } catch (e) {
       print(e);
@@ -105,11 +120,13 @@ class FetchApi {
   fetchDataByFirstLetter(letter) async {
     var client = http.Client();
     try {
-      var res = await client.get(
-          Uri.parse("https://www.themealdb.com/api/json/v1/1/search.php?f=$letter"));
+      var res = await client.get(Uri.parse(
+          "https://www.themealdb.com/api/json/v1/1/search.php?f=$letter"));
       if (res.statusCode == 200) {
         // print(res.body);
         return json.decode(res.body);
+      }else if (res.statusCode == 502) {
+        return const Text("Not Connected");
       }
     } catch (e) {
       print(e);
@@ -119,11 +136,13 @@ class FetchApi {
   fetchDataByName(query) async {
     var client = http.Client();
     try {
-      var res = await client.get(
-          Uri.parse("https://www.themealdb.com/api/json/v1/1/search.php?s=$query"));
+      var res = await client.get(Uri.parse(
+          "https://www.themealdb.com/api/json/v1/1/search.php?s=$query"));
       if (res.statusCode == 200) {
         // print(res.body);
         return json.decode(res.body);
+      }else if (res.statusCode == 502) {
+        return const Text("Not Connected");
       }
     } catch (e) {
       print(e);
@@ -133,11 +152,13 @@ class FetchApi {
   fetchDataByCategory(category) async {
     var client = http.Client();
     try {
-      var res = await client.get(
-          Uri.parse("https://www.themealdb.com/api/json/v1/1/filter.php?c=$category"));
+      var res = await client.get(Uri.parse(
+          "https://www.themealdb.com/api/json/v1/1/filter.php?c=$category"));
       if (res.statusCode == 200) {
         // print(res.body);
         return json.decode(res.body);
+      }else if (res.statusCode == 502) {
+        return const Text("Not Connected");
       }
     } catch (e) {
       print(e);

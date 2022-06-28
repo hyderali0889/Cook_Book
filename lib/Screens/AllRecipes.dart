@@ -2,6 +2,7 @@
 
 import 'dart:io';
 import 'dart:ui';
+import 'package:cook_book/Screens/RecipeDetails.dart';
 import 'package:cook_book/Theme/Sizes.dart';
 import 'package:cook_book/Utils/ApiCall.dart';
 import 'package:cook_book/components/AppBarWithBackButton.dart';
@@ -20,42 +21,82 @@ class AllRecipes extends StatefulWidget {
 }
 
 class _AllRecipesState extends State<AllRecipes> {
-  var allRecipes;
+  dynamic allRecipes;
+  bool isError1 = false;
+  bool isError2 = false;
+  bool isError3 = false;
   @override
   void initState() {
     super.initState();
     if (widget.selectedCt == "Category") {
-      getAllRecipes();
+      try {
+        getAllRecipes();
+      } catch (e) {
+        setState(() {
+          isError1 = true;
+        });
+      }
     } else if (widget.selectedCt == "Area") {
-      getAllAreas();
+      try {
+        getAllAreas();
+      } catch (e) {
+        setState(() {
+          isError2 = true;
+        });
+      }
     } else {
-      getAllIngredients();
+      try {
+        getAllIngredients();
+      } catch (e) {
+        setState(() {
+          isError3 = true;
+        });
+      }
     }
   }
 
   getAllRecipes() async {
     if (widget.data.isNotEmpty) {
-      var data = await FetchApi().fetchDataByCategory(widget.data);
-      setState(() {
-        allRecipes = data['meals'];
-      });
+      try {
+        dynamic data = await FetchApi().fetchDataByCategory(widget.data);
+        setState(() {
+          allRecipes = data['meals'];
+        });
+      } catch (e) {
+        setState(() {
+          isError1 = true;
+        });
+      }
     }
   }
 
   getAllAreas() async {
-    if (widget.data.isNotEmpty) {
-      var data = await FetchApi().fetchDataForASpecificCountry(widget.data);
+    try {
+      if (widget.data.isNotEmpty) {
+        dynamic data =
+            await FetchApi().fetchDataForASpecificCountry(widget.data);
+        setState(() {
+          allRecipes = data['meals'];
+        });
+      }
+    } catch (e) {
       setState(() {
-        allRecipes = data['meals'];
+        isError2 = true;
       });
     }
   }
 
   getAllIngredients() async {
-    if (widget.data.isNotEmpty) {
-      var data = await FetchApi().fetchDataFromAnIngredients(widget.data);
+    try {
+      if (widget.data.isNotEmpty) {
+        dynamic data = await FetchApi().fetchDataFromAnIngredients(widget.data);
+        setState(() {
+          allRecipes = data['meals'];
+        });
+      }
+    } catch (e) {
       setState(() {
-        allRecipes = data['meals'];
+        isError3 = true;
       });
     }
   }
@@ -124,7 +165,12 @@ class _AllRecipesState extends State<AllRecipes> {
                           (context, index) {
                             return InkWell(
                               onTap: () {
-                                print(allRecipes[index]["strMeal"]);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => RecipeDetails(
+                                            recipeName: allRecipes[index]
+                                                ["strMeal"])));
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -176,6 +222,13 @@ class _AllRecipesState extends State<AllRecipes> {
         : SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height - 31,
-            child: Center(child: Image.asset("assets/gifs/loader.gif")));
+            child: Center(
+                child: isError1 || isError2 || isError3
+                    ? Image.asset(
+                        "assets/images/NotConnected.png",
+                        width: 400,
+                        height: 400,
+                      )
+                    : Image.asset("assets/gifs/loader.gif")));
   }
 }
