@@ -1,14 +1,14 @@
 // ignore_for_file: file_names, use_build_context_synchronously
 
+import 'dart:async';
 import 'dart:io';
-import 'package:advance_notification/advance_notification.dart';
 import 'package:cook_book/Screens/NoConnection.dart';
 import 'package:cook_book/Theme/Sizes.dart';
+import 'package:cook_book/Utils/ApiCall.dart';
 import 'package:cook_book/Utils/GradientText.dart';
 import 'package:flutter/material.dart';
 import '../Theme/Colors.dart';
 import '../components/AppBar.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 
 import '../components/Navigation.dart';
 
@@ -20,35 +20,46 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  final Connectivity _connectivity = Connectivity();
+  List<String> connectedTexts = [
+    " Checking your Internet Connection ",
+    " This is taking a very long time, \n Please check you Internet connection and try again. "
+  ];
+
+  int currentid = 0;
+  late Timer t;
+
   @override
   void initState() {
     super.initState();
-    initConnectivity();
+    checkConnection();
+    changeText();
   }
 
-  Future<void> initConnectivity() async {
-    late ConnectivityResult result;
+  changeText() {
+    if (mounted) {
+      t = Timer(const Duration(seconds: 5), () {
+        setState(() {
+          currentid = 1;
+        });
+      });
+    }
+  }
 
-    try {
-      result = await _connectivity.checkConnectivity();
-      if (result == ConnectivityResult.mobile ||
-          result == ConnectivityResult.wifi ||
-          result == ConnectivityResult.ethernet) {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: ((context) => const Navigation())));
-      } else {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: ((context) => const NotConnected())));
-      }
-    } catch (e) {
-      const AdvanceSnackBar(
-        message: "An Error Occured , Please Check Your Internet Connection",
-        mode: Mode.ADVANCE,
-        type: sType.DARK,
-        duration: Duration(seconds: 5),
-      ).show(context);
-      return;
+  @override
+  void dispose() {
+    super.dispose();
+    t.cancel();
+  }
+
+  checkConnection() async {
+    bool isConnected = await FetchApi().checkNetwork();
+
+    if (isConnected == true) {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const Navigation()));
+    } else {
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const NotConnected()));
     }
   }
 
@@ -83,7 +94,18 @@ class _SplashScreenState extends State<SplashScreen> {
               child: Container(
                 margin: EdgeInsets.only(
                     top: MediaQuery.of(context).size.height * 0.1),
-                child: Image.asset("assets/gifs/loader.gif"),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset("assets/gifs/loader.gif"),
+                    Text(
+                      connectedTexts[currentid],
+                      style:
+                          TextStyle(color: Color.textColor, fontSize: Sizes.lg),
+                    )
+                  ],
+                ),
               ),
             ),
           ),

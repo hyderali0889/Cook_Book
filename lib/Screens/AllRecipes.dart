@@ -1,7 +1,9 @@
 // ignore_for_file: file_names
 
+import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
+import 'package:advance_notification/advance_notification.dart';
 import 'package:cook_book/Screens/RecipeDetails.dart';
 import 'package:cook_book/Theme/Sizes.dart';
 import 'package:cook_book/Utils/ApiCall.dart';
@@ -25,6 +27,7 @@ class _AllRecipesState extends State<AllRecipes> {
   bool isError1 = false;
   bool isError2 = false;
   bool isError3 = false;
+
   @override
   void initState() {
     super.initState();
@@ -32,25 +35,34 @@ class _AllRecipesState extends State<AllRecipes> {
       try {
         getAllRecipes();
       } catch (e) {
-        setState(() {
-          isError1 = true;
-        });
+        const AdvanceSnackBar(
+          message: "An Error Occured , Please Check Your Internet Connection",
+          mode: Mode.ADVANCE,
+          type: sType.DARK,
+          duration: Duration(seconds: 5),
+        ).show(context);
       }
     } else if (widget.selectedCt == "Area") {
       try {
         getAllAreas();
       } catch (e) {
-        setState(() {
-          isError2 = true;
-        });
+        const AdvanceSnackBar(
+          message: "An Error Occured , Please Check Your Internet Connection",
+          mode: Mode.ADVANCE,
+          type: sType.DARK,
+          duration: Duration(seconds: 5),
+        ).show(context);
       }
     } else {
       try {
         getAllIngredients();
       } catch (e) {
-        setState(() {
-          isError3 = true;
-        });
+        const AdvanceSnackBar(
+          message: "An Error Occured , Please Check Your Internet Connection",
+          mode: Mode.ADVANCE,
+          type: sType.DARK,
+          duration: Duration(seconds: 5),
+        ).show(context);
       }
     }
   }
@@ -59,13 +71,19 @@ class _AllRecipesState extends State<AllRecipes> {
     if (widget.data.isNotEmpty) {
       try {
         dynamic data = await FetchApi().fetchDataByCategory(widget.data);
-        setState(() {
-          allRecipes = data['meals'];
-        });
+
+
+        if (data != null) {
+          setState(() {
+            allRecipes = data['meals'];
+          });
+        } else if (data == false) {
+          setState(() {
+            isError1 = true;
+          });
+        }
       } catch (e) {
-        setState(() {
-          isError1 = true;
-        });
+        print(e);
       }
     }
   }
@@ -75,14 +93,19 @@ class _AllRecipesState extends State<AllRecipes> {
       if (widget.data.isNotEmpty) {
         dynamic data =
             await FetchApi().fetchDataForASpecificCountry(widget.data);
-        setState(() {
-          allRecipes = data['meals'];
-        });
+
+        if (data != null) {
+          setState(() {
+            allRecipes = data['meals'];
+          });
+        } else if (data == false) {
+          setState(() {
+            isError2 = true;
+          });
+        }
       }
     } catch (e) {
-      setState(() {
-        isError2 = true;
-      });
+      print(e);
     }
   }
 
@@ -90,15 +113,26 @@ class _AllRecipesState extends State<AllRecipes> {
     try {
       if (widget.data.isNotEmpty) {
         dynamic data = await FetchApi().fetchDataFromAnIngredients(widget.data);
-        setState(() {
-          allRecipes = data['meals'];
-        });
+
+        if (data != null) {
+          setState(() {
+            allRecipes = data['meals'];
+          });
+        } else if (data == false) {
+          setState(() {
+            isError3 = true;
+          });
+        }
       }
     } catch (e) {
-      setState(() {
-        isError3 = true;
-      });
+      print(e);
     }
+  }
+
+  @override
+  void dispose() {
+   
+    super.dispose();
   }
 
   @override
@@ -222,13 +256,30 @@ class _AllRecipesState extends State<AllRecipes> {
         : SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height - 31,
-            child: Center(
-                child: isError1 || isError2 || isError3
-                    ? Image.asset(
-                        "assets/images/NotConnected.png",
-                        width: 400,
-                        height: 400,
-                      )
-                    : Image.asset("assets/gifs/loader.gif")));
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Center(
+                    child: isError1 || isError2 || isError3
+                        ? Column(
+                            children: [
+                              Image.asset(
+                                "assets/images/NotConnected.png",
+                                width: 400,
+                                height: 400,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 20),
+                                child: Text(
+                                  "Not Connected",
+                                  style: TextStyle(color: Color.textColor),
+                                ),
+                              )
+                            ],
+                          )
+                        : Image.asset("assets/gifs/loader.gif")),
+              ],
+            ));
   }
 }

@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, avoid_print
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -17,7 +18,7 @@ class FetchApi {
         return const Text("Not Connected");
       }
     } catch (e) {
-      print(e);
+     return false;
     }
   }
 
@@ -33,7 +34,7 @@ class FetchApi {
         return const Text("Not Connected");
       }
     } catch (e) {
-      print(e);
+     return false;
     }
   }
 
@@ -49,7 +50,7 @@ class FetchApi {
         return const Text("Not Connected");
       }
     } catch (e) {
-      print(e);
+     return false;
     }
   }
 
@@ -65,7 +66,7 @@ class FetchApi {
         return const Text("Not Connected");
       }
     } catch (e) {
-      print(e);
+     return false;
     }
   }
 
@@ -81,7 +82,7 @@ class FetchApi {
         return const Text("Not Connected");
       }
     } catch (e) {
-      print(e);
+     return false;
     }
   }
 
@@ -97,7 +98,7 @@ class FetchApi {
         return const Text("Not Connected");
       }
     } catch (e) {
-      print(e);
+     return false;
     }
   }
 
@@ -113,7 +114,7 @@ class FetchApi {
         return const Text("Not Connected");
       }
     } catch (e) {
-      print(e);
+     return false;
     }
   }
 
@@ -129,7 +130,7 @@ class FetchApi {
         return const Text("Not Connected");
       }
     } catch (e) {
-      print(e);
+     return false;
     }
   }
 
@@ -145,7 +146,7 @@ class FetchApi {
         return const Text("Not Connected");
       }
     } catch (e) {
-      print(e);
+     return false;
     }
   }
 
@@ -161,7 +162,25 @@ class FetchApi {
         return const Text("Not Connected");
       }
     } catch (e) {
-      print(e);
+     return false;
     }
   }
+
+checkNetwork() async{
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        return true;
+      } else {
+        return false;
+      }
+    } on SocketException catch (_) {
+      return false;
+    }
+
 }
+
+
+}
+
+

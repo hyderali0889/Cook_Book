@@ -1,8 +1,9 @@
-// ignore_for_file: file_names, avoid_print
+// ignore_for_file: file_names, avoid_print, unnecessary_const
+import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
-import 'package:advance_notification/advance_notification.dart';
 import 'package:cook_book/Screens/AllRecipes.dart';
+import 'package:cook_book/Screens/RecipeDetails.dart';
 import 'package:cook_book/Theme/Sizes.dart';
 import 'package:cook_book/Theme/Spacing.dart';
 import 'package:cook_book/components/Card.dart';
@@ -29,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isError2 = false;
   bool isError3 = false;
   bool isError4 = false;
+
   @override
   void initState() {
     super.initState();
@@ -42,25 +44,18 @@ class _HomeScreenState extends State<HomeScreen> {
   getListOfallCategories() async {
     try {
       dynamic dat = await FetchApi().fetchListOfAllCategory();
-      Future.delayed(const Duration(seconds: 10), () {
-        if (dat == null) {
-          setState(() {
-            isError1 = true;
-          });
-        }
-      });
+
       if (dat != null) {
         setState(() {
           allCategories = dat["meals"];
         });
+      } else if (dat == false) {
+        setState(() {
+          isError1 = true;
+        });
       }
     } catch (e) {
-      const AdvanceSnackBar(
-              message: "Not Found", type: sType.ERROR, mode: Mode.MODERN)
-          .show(context);
-      setState(() {
-        isError1 = true;
-      });
+      print(e);
     }
   }
 
@@ -68,76 +63,53 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       dynamic dat = await FetchApi().fetchListOfAllAreas();
 
-      Future.delayed(const Duration(seconds: 10), () {
-        if (dat == null) {
-          setState(() {
-            isError2 = true;
-          });
-        }
-      });
-
       if (dat != null) {
         setState(() {
           allAreas = dat["meals"];
         });
+      } else if (dat == false) {
+        setState(() {
+          isError2 = true;
+        });
       }
     } catch (e) {
-      const AdvanceSnackBar(
-              message: "Not Found", type: sType.ERROR, mode: Mode.MODERN)
-          .show(context);
-      setState(() {
-        isError2 = true;
-      });
+      print(e);
     }
   }
 
   getListOfallIngredients() async {
     try {
       dynamic dat = await FetchApi().fetchListOfAllIngredients();
-      Future.delayed(const Duration(seconds: 10), () {
-        if (dat == null) {
-          setState(() {
-            isError3 = true;
-          });
-        }
-      });
+
       if (dat != null) {
         setState(() {
           allIngredients = dat["meals"];
         });
+      } else if (dat == false) {
+        setState(() {
+          isError3 = true;
+        });
       }
     } catch (e) {
-      const AdvanceSnackBar(
-              message: "Not Found", type: sType.ERROR, mode: Mode.MODERN)
-          .show(context);
-      setState(() {
-        isError3 = true;
-      });
+      print(e);
     }
   }
 
   getaRandomRecipe() async {
     try {
       dynamic dat = await FetchApi().fetchARandomRecipe();
-      Future.delayed(const Duration(seconds: 10), () {
-        if (dat == null) {
-          setState(() {
-            isError4 = true;
-          });
-        }
-      });
+
       if (dat != null) {
         setState(() {
           aRandomRecipe = dat["meals"];
         });
+      } else if (dat == false) {
+        setState(() {
+          isError4 = true;
+        });
       }
     } catch (e) {
-      const AdvanceSnackBar(
-              message: "Not Found", type: sType.ERROR, mode: Mode.MODERN)
-          .show(context);
-      setState(() {
-        isError4 = true;
-      });
+      print(e);
     }
   }
 
@@ -180,7 +152,18 @@ class _HomeScreenState extends State<HomeScreen> {
           allCategories == null
               ? Center(
                   child: isError1
-                      ? Image.asset('assets/images/NotConnected.png')
+                      ? Column(
+                          children: [
+                            Image.asset('assets/images/NotConnected.png'),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 40),
+                              child: Text(
+                                "Not Connected",
+                                style: TextStyle(color: Color.textColor),
+                              ),
+                            )
+                          ],
+                        )
                       : Image.asset("assets/gifs/loader.gif"),
                 )
               : ScrollConfiguration(
@@ -233,7 +216,16 @@ class _HomeScreenState extends State<HomeScreen> {
           allAreas == null
               ? Center(
                   child: isError2
-                      ? Image.asset('assets/images/NotConnected.png')
+                      ? Column(
+                          children: [
+                            Image.asset('assets/images/NotConnected.png'),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 40),
+                              child: Text("Not Connected",
+                                  style: TextStyle(color: Color.textColor)),
+                            )
+                          ],
+                        )
                       : Image.asset("assets/gifs/loader.gif"),
                 )
               : ScrollConfiguration(
@@ -286,7 +278,16 @@ class _HomeScreenState extends State<HomeScreen> {
           allIngredients == null
               ? Center(
                   child: isError3
-                      ? Image.asset('assets/images/NotConnected.png')
+                      ? Column(
+                          children: [
+                            Image.asset('assets/images/NotConnected.png'),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 40),
+                              child: Text("Not Connected",
+                                  style: TextStyle(color: Color.textColor)),
+                            )
+                          ],
+                        )
                       : Image.asset("assets/gifs/loader.gif"),
                 )
               : ScrollConfiguration(
@@ -346,7 +347,18 @@ class _HomeScreenState extends State<HomeScreen> {
               ? aRandomRecipe == null
                   ? Center(
                       child: isError4
-                          ? Image.asset('assets/images/NotConnected.png')
+                          ? Column(
+                              children: [
+                                Image.asset('assets/images/NotConnected.png'),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 40),
+                                  child: Text(
+                                    "Not Connected",
+                                    style: TextStyle(color: Color.textColor),
+                                  ),
+                                )
+                              ],
+                            )
                           : Image.asset("assets/gifs/loader.gif"),
                     )
                   : Padding(
@@ -360,7 +372,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                     color: Color.headingColor)),
                           ],
                         ),
-                        fun: mobileRandomRecipe,
+                        fun: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: ((context) => RecipeDetails(
+                                        recipeName: aRandomRecipe[0]["strMeal"],
+                                      ))));
+                        },
                         img: ClipRRect(
                             borderRadius: BorderRadius.circular(14.0),
                             child: FadeInImage.assetNetwork(
@@ -379,7 +398,18 @@ class _HomeScreenState extends State<HomeScreen> {
               : aRandomRecipe == null
                   ? Center(
                       child: isError4
-                          ? Image.asset('assets/images/NotConnected.png')
+                          ? Column(
+                              children: [
+                                Image.asset('assets/images/NotConnected.png'),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 40),
+                                  child: Text(
+                                    "Not Connected",
+                                    style: TextStyle(color: Color.textColor),
+                                  ),
+                                )
+                              ],
+                            )
                           : Image.asset("assets/gifs/loader.gif"),
                     )
                   : ScrollConfiguration(
@@ -493,8 +523,4 @@ class _HomeScreenState extends State<HomeScreen> {
       return Text("$i");
     }
   }
-}
-
-mobileRandomRecipe() {
-  print("Mobile");
 }
