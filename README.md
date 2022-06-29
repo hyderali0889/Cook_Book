@@ -1,16 +1,16 @@
 # cook_book
 
-A new Flutter project.
+A Flutter app created by Hayder Ali as a portfolio project. This app contains a large number of available Recipes to use which are fetched from Mealdb.com .
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This app is build for Android, Windows and Mac OS.
 
-A few resources to get you started if this is your first Flutter project:
+A few resources to get you started :
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- [Android App](https://docs.flutter.dev/get-started/codelab)
+- [Windows App](https://docs.flutter.dev/cookbook)
+- [Mac OS App](https://docs.flutter.dev/cookbook)
+- [Github Repo](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
